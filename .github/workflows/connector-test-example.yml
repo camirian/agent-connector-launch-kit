@@ -16,11 +16,11 @@ jobs:
   connector-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: "20"
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.10"
       - run: npm test
@@ -37,9 +37,8 @@ jobs:
           CONNECTOR_TESTBENCH_BIN: connector-testbench
           CONNECTOR_EVIDENCE_DIR: artifacts/connector-testbench/${{ github.run_id }}
         run: npm run connector-test
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: connector-testbench-${{ github.run_id }}
           path: artifacts/connector-testbench/
           if-no-files-found: error
-
