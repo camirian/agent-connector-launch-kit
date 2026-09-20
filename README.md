@@ -58,6 +58,10 @@ CHECK_BASE_URL=https://YOUR-WORKER.workers.dev npm run connector-check
 
 The shortest workflow is: clone → install → test → customize → deploy → validate. The kit has no runtime dependency installation beyond the deployment tool used by Wrangler.
 
+## Live reference demo
+
+The reference deployment is available at [agent-connector-launch-kit-demo.caaren-amirian-build.workers.dev](https://agent-connector-launch-kit-demo.caaren-amirian-build.workers.dev). It is a disposable example instance, not a production service. Check its [health endpoint](https://agent-connector-launch-kit-demo.caaren-amirian-build.workers.dev/health) or [OpenAPI document](https://agent-connector-launch-kit-demo.caaren-amirian-build.workers.dev/openapi.json).
+
 ## Repository map
 
 | Path | Purpose |
