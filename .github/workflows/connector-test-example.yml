@@ -1,0 +1,45 @@
+name: connector test example
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Explicit HTTPS deployed preview/demo base URL"
+        required: true
+        type: string
+      openapi_url:
+        description: "Explicit HTTPS OpenAPI URL for the same target"
+        required: true
+        type: string
+
+jobs:
+  connector-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - run: npm test
+      - name: Run static readiness check
+        env:
+          CHECK_BASE_URL: ${{ inputs.base_url }}
+        run: npm run connector-check
+      - name: Install pinned Connector Testbench
+        run: python -m pip install "connector-testbench @ git+https://github.com/camirian/connector-testbench.git@v0.1.0"
+      - name: Run safe live contract test
+        env:
+          CONNECTOR_BASE_URL: ${{ inputs.base_url }}
+          CONNECTOR_OPENAPI_URL: ${{ inputs.openapi_url }}
+          CONNECTOR_TESTBENCH_BIN: connector-testbench
+          CONNECTOR_EVIDENCE_DIR: artifacts/connector-testbench/${{ github.run_id }}
+        run: npm run connector-test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: connector-testbench-${{ github.run_id }}
+          path: artifacts/connector-testbench/
+          if-no-files-found: error
+
