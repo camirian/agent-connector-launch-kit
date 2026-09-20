@@ -9,6 +9,7 @@ A minimal, reusable starter kit for exposing a small API-backed capability to AI
 - A structured JSON action endpoint.
 - Connector metadata for organizing launch and submission details.
 - Automated tests and a connector-readiness checker.
+- Optional safe live contract testing through the pinned Connector Testbench release.
 - Security defaults and reusable URL-safety helpers.
 - Privacy, terms, support, and icon templates.
 - Deployment instructions.
@@ -54,7 +55,41 @@ npm run deploy
 CHECK_BASE_URL=https://YOUR-WORKER.workers.dev npm run connector-check
 ```
 
-`connector-check` is a local launch-preparation aid. It reports PASS, WARN, or FAIL. It does not determine approval by Meta or any other platform.
+`connector-check` is a static/readiness check. Its live mode is read-only by default. It reports PASS, WARN, FAIL, or INFO. It does not determine approval by Meta or any other platform.
+
+## End-to-end safe test workflow
+
+The Launch Kit remains usable without Connector Testbench. When a deployed HTTPS target is available, the optional workflow is:
+
+```sh
+# A. Clone
+git clone https://github.com/camirian/agent-connector-launch-kit.git
+cd agent-connector-launch-kit
+
+# B. Customize
+# Edit src/index.js, connector.json, and the OpenAPI schemas.
+
+# C. Local test
+npm test
+
+# D. Deploy
+npm run deploy
+
+# E. Static readiness check
+CHECK_BASE_URL=https://YOUR-WORKER.workers.dev npm run connector-check
+
+# F. Safe live contract test
+CONNECTOR_BASE_URL=https://YOUR-WORKER.workers.dev \
+CONNECTOR_OPENAPI_URL=https://YOUR-WORKER.workers.dev/openapi.json \
+npm run connector-test
+
+# G. Inspect evidence
+find artifacts/connector-testbench -maxdepth 2 -type f | sort
+```
+
+`connector-check` validates Launch Kit metadata, routes, and safe public surfaces. `connector-test` runs Connector Testbench in `SAFE_READ_ONLY` mode: GET, HEAD, and OPTIONS may be probed; POST, PUT, PATCH, and DELETE are discovered and reported but not executed against external targets. The wrapper pins Connector Testbench to the immutable `v0.1.0` Git tag and stores its bootstrap environment under the ignored `.connector-testbench/` directory.
+
+The flow is `BUILD → STATIC VALIDATION → SAFE LIVE TESTING → EVIDENCE`. Neither tool is platform certification or an approval predictor.
 
 The shortest workflow is: clone → install → test → customize → deploy → validate. The kit has no runtime dependency installation beyond the deployment tool used by Wrangler.
 
@@ -70,6 +105,7 @@ The reference deployment is available at [agent-connector-launch-kit-demo.caaren
 | `src/security.js` | Reusable request, response, HTTPS, content-type, and URL safety helpers |
 | `connector.json` | Launch Kit metadata; not an official platform schema |
 | `scripts/connector-check.mjs` | Static and optional deployed-instance checks |
+| `scripts/connector-test.mjs` | Optional pinned Connector Testbench runner and evidence path |
 | `tests/` | Node built-in test suite |
 | `docs/meta-muse-submission.md` | Experience-based, time-stamped Muse preparation notes |
 | `docs/security.md` | Security boundary and extension guidance |
@@ -82,6 +118,8 @@ The reference deployment is available at [agent-connector-launch-kit-demo.caaren
 3. Add focused tests for valid input, malformed input, limits, and the main failure modes.
 4. Update `connector.json`, the landing page, and the submission notes.
 5. Run tests, deploy a disposable instance, and run `connector-check` against it.
+
+The optional Connector Testbench path is intentionally separate from the Launch Kit implementation. It produces evidence that a future adapter could map into Agent Evidence Recorder; this repository does not perform that ingestion.
 
 If your capability fetches arbitrary external URLs, use `isUnsafeExternalUrl()` before the first request and validate every redirect target. The example does not fetch URLs and therefore does not add unnecessary SSRF surface.
 

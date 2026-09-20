@@ -4,4 +4,6 @@ node_modules/
 .env
 .env.*
 !.env.example
+.connector-testbench/
+artifacts/connector-testbench/
 dist/

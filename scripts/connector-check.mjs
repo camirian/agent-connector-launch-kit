@@ -22,9 +22,15 @@ check("metadata routes match OpenAPI", JSON.stringify(metadata.routes?.slice().s
 const base = process.env.CHECK_BASE_URL;
 if (base) {
   const origin = base.replace(/\/$/, "");
-  check("deployed URL uses HTTPS", origin.startsWith("https://"), origin);
+  const baseUrl = new URL(origin);
+  const localTarget = ["localhost", "127.0.0.1", "::1"].includes(baseUrl.hostname);
+  check("deployed URL uses HTTPS", baseUrl.protocol === "https:" || localTarget, origin);
   for (const path of ["/health", "/openapi.json", "/", "/support", "/privacy", "/terms"]) { try { const response = await fetch(origin + path); check(`${path} responds`, response.ok, String(response.status)); } catch (error) { check(`${path} responds`, false, error.message); } }
-  try { const response = await fetch(origin + "/api/example", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text: "connector check" }) }); const body = await response.json(); check("/api/example accepts a valid request", response.ok && body.characters === 15, String(response.status)); } catch (error) { check("/api/example accepts a valid request", false, error.message); }
+  if (process.env.CHECK_ALLOW_MUTATIONS === "true") {
+    try { const response = await fetch(origin + "/api/example", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text: "connector check" }) }); const body = await response.json(); check("/api/example accepts a valid request", response.ok && body.characters === 15, String(response.status)); } catch (error) { check("/api/example accepts a valid request", false, error.message); }
+  } else {
+    info("/api/example mutation check", "skipped by default; set CHECK_ALLOW_MUTATIONS=true only for an explicitly authorized local or synthetic target");
+  }
   try { const response = await fetch(origin + "/openapi.json"); const spec = await response.json(); check("deployed OpenAPI has documented routes", ["/health", "/openapi.json", "/api/example"].every((path) => spec.paths?.[path]), "required routes"); } catch (error) { check("deployed OpenAPI has documented routes", false, error.message); }
 } else info("deployed checks", "set CHECK_BASE_URL=https://YOUR_WORKER.workers.dev to check a live instance");
 
