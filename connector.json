@@ -1,0 +1,18 @@
+{
+  "name": "Example Text Echo Connector",
+  "developer": "Your Company",
+  "product_url": "https://your-domain.example",
+  "description": "A small example connector that validates and echoes text.",
+  "example_prompts": ["Echo this text through the connector: hello", "How many characters are in this sentence?"],
+  "api_base_url": "https://your-domain.example",
+  "openapi_url": "https://your-domain.example/openapi.json",
+  "documentation_url": "https://your-domain.example/",
+  "support_url": "https://your-domain.example/support",
+  "privacy_url": "https://your-domain.example/privacy",
+  "terms_url": "https://your-domain.example/terms",
+  "payments": "none",
+  "authentication": "none",
+  "version": "0.1.0",
+  "routes": ["GET /", "GET /health", "GET /openapi.json", "POST /api/example", "GET /support", "GET /privacy", "GET /terms"],
+  "metadata_note": "Launch Kit metadata for organizing connector submission information. This is not an official platform schema."
+}

@@ -1,0 +1,14 @@
+{
+  "name": "agent-connector-launch-kit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A platform-neutral Cloudflare Worker starter kit for small API-backed agent connectors.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "connector-check": "node scripts/connector-check.mjs",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "license": "MIT"
+}
