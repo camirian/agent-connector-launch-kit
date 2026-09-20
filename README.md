@@ -1,6 +1,25 @@
 # Agent Connector Launch Kit
 
-A small, platform-neutral starter repository for turning an API-backed capability into a clean connector surface. It uses a Cloudflare Worker, standard Web APIs, and no runtime dependencies.
+A minimal, reusable starter kit for exposing a small API-backed capability to AI-agent platforms through a clean HTTPS API/OpenAPI surface. It uses a Cloudflare Worker, standard Web APIs, and no runtime dependencies.
+
+## What it provides
+
+- Cloudflare Worker reference implementation.
+- `GET /health` and `GET /openapi.json`.
+- A structured JSON action endpoint.
+- Connector metadata for organizing launch and submission details.
+- Automated tests and a connector-readiness checker.
+- Security defaults and reusable URL-safety helpers.
+- Privacy, terms, support, and icon templates.
+- Deployment instructions.
+- Meta Muse submission notes based on a real September 2026 submission experience.
+
+## What it is not
+
+- Not an official Meta project or Meta SDK.
+- Not Meta certification and not a guarantee of connector approval.
+- Not limited to Meta Muse.
+- Not a SaaS dashboard, account system, billing system, or database.
 
 The kit gives a developer:
 
@@ -18,13 +37,16 @@ The example capability echoes text and returns its Unicode character count. Repl
 Requirements: Node.js 20+ and a Cloudflare account for deployment. Local tests and checks do not require an account.
 
 ```sh
+git clone https://github.com/camirian/agent-connector-launch-kit.git
+cd agent-connector-launch-kit
+npm install
 npm test
 npm run connector-check
 npx wrangler dev
 CHECK_BASE_URL=http://localhost:8787 npm run connector-check
 ```
 
-Before deployment, replace the example URLs and contact text in `connector.json` and `src/index.js`, then update `docs/security.md`, privacy, terms, and support pages for the real service.
+Customize the example business logic, OpenAPI schemas, and `connector.json`. Replace every `YOUR_*` metadata value and the example contact/policy text before deployment.
 
 ```sh
 npx wrangler login
@@ -33,6 +55,8 @@ CHECK_BASE_URL=https://YOUR-WORKER.workers.dev npm run connector-check
 ```
 
 `connector-check` is a local launch-preparation aid. It reports PASS, WARN, or FAIL. It does not determine approval by Meta or any other platform.
+
+The shortest workflow is: clone → install → test → customize → deploy → validate. The kit has no runtime dependency installation beyond the deployment tool used by Wrangler.
 
 ## Repository map
 

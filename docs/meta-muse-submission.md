@@ -1,8 +1,8 @@
 # Meta Muse submission preparation
 
-This is a preparation aid, not an official Meta schema and not a certification claim. Meta may change the submission form at any time. Verify the live form before submitting.
+This is a preparation aid, not an official Meta schema and not a certification claim. Meta may change the submission form or requirements at any time. Verify the live form before submitting.
 
-## OBSERVED IN OUR SEPTEMBER 2026 SUBMISSION
+## OBSERVED IN A REAL SEPTEMBER 2026 META MUSE SUBMISSION
 
 The live submission flow asked for the following overview information:
 

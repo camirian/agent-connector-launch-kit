@@ -22,7 +22,7 @@ const OPENAPI = {
 const PAGE = (title, body) => `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title><style>body{font:16px system-ui;max-width:760px;margin:4rem auto;padding:0 1rem;line-height:1.6;color:#17324d}a{color:#146c94}code{background:#eef3f6;padding:.15rem .3rem}</style></head><body>${body}</body></html>`;
 const pages = {
   "/": PAGE("Example Text Echo Connector", "<h1>Example Text Echo Connector</h1><p>A tiny, low-consequence API example for the Agent Connector Launch Kit.</p><p><a href=\"/openapi.json\">OpenAPI</a> · <a href=\"/support\">Support</a> · <a href=\"/privacy\">Privacy</a> · <a href=\"/terms\">Terms</a></p>"),
-  "/support": PAGE("Support", "<h1>Support</h1><p>Replace this page with your support contact and response expectations before deployment.</p><p>Example contact: support@example.invalid</p>"),
+  "/support": PAGE("Support", "<h1>Support</h1><p>Replace this page with your support contact and response expectations before deployment.</p><p>Template contact: YOUR_SUPPORT_EMAIL@example.invalid</p>"),
   "/privacy": PAGE("Privacy policy template", "<h1>Privacy policy template</h1><p>This starter endpoint does not store request data. Replace this template with a policy reviewed for your actual service, data flows, and jurisdiction.</p>"),
   "/terms": PAGE("Terms template", "<h1>Terms of service template</h1><p>This starter endpoint is provided as an example. Replace this template with terms appropriate to your service before launch.</p>"),
 };

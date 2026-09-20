@@ -1,18 +1,18 @@
 {
   "name": "Example Text Echo Connector",
-  "developer": "Your Company",
-  "product_url": "https://your-domain.example",
+  "developer": "YOUR_COMPANY",
+  "product_url": "https://YOUR_PRODUCT_URL.example",
   "description": "A small example connector that validates and echoes text.",
   "example_prompts": ["Echo this text through the connector: hello", "How many characters are in this sentence?"],
-  "api_base_url": "https://your-domain.example",
-  "openapi_url": "https://your-domain.example/openapi.json",
-  "documentation_url": "https://your-domain.example/",
-  "support_url": "https://your-domain.example/support",
-  "privacy_url": "https://your-domain.example/privacy",
-  "terms_url": "https://your-domain.example/terms",
+  "api_base_url": "https://YOUR_API_URL.example",
+  "openapi_url": "https://YOUR_API_URL.example/openapi.json",
+  "documentation_url": "https://YOUR_PRODUCT_URL.example/",
+  "support_url": "https://YOUR_SUPPORT_URL.example/support",
+  "privacy_url": "https://YOUR_PRIVACY_URL.example/privacy",
+  "terms_url": "https://YOUR_TERMS_URL.example/terms",
   "payments": "none",
   "authentication": "none",
   "version": "0.1.0",
   "routes": ["GET /", "GET /health", "GET /openapi.json", "POST /api/example", "GET /support", "GET /privacy", "GET /terms"],
-  "metadata_note": "Launch Kit metadata for organizing connector submission information. This is not an official platform schema."
+  "metadata_note": "Launch Kit metadata for organizing connector submission information. Replace every YOUR_* value before deployment. This is not an official platform schema."
 }
